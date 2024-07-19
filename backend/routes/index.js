@@ -8,7 +8,7 @@ const apiRouter = require('./api');
 //   res.send('Hello World!');
 // });
 
-
+router.use('/api', apiRouter);
 // backend/routes/index.js
 // ...
 // Add a XSRF-TOKEN cookie
@@ -21,7 +21,7 @@ router.get("/api/csrf/restore", (req, res) => {
   });
   // ...
 
-router.use('/api', apiRouter);
+
 
 
 module.exports = router;
