@@ -8,17 +8,17 @@ if (process.env.NODE_ENV === 'production') {
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.addColumn("Users", 'firstName', {
+    await queryInterface.addColumn(options || 'Users','firstName', {
       type: Sequelize.STRING(50),
       allowNull: false,
       defaultValue: ''
-    }, options)
+    })
 
-    await queryInterface.addColumn('Users', 'lastName', {
+    await queryInterface.addColumn(options || 'Users', 'lastName', {
       type: Sequelize.STRING(50),
       allowNull: false,
       defaultValue: ''
-    }, options)
+    })
   },
 
 
