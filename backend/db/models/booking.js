@@ -30,24 +30,30 @@ module.exports = (sequelize, DataTypes) => {
     },
     userId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     startDate: {
       type: DataTypes.DATE,
       allowNull: false,
       validate: {
+        notNull: { msg: "Start Date is required"},
         isDate: true,
-        isAfter: new Date().toISOString()
+        isAfter(value) {
+          if (new Date(value) <= new Date().toISOString().split('T')[0]) {
+            throw new Error('startDate cannot be in the past');
+          }
+        }
       }
     },
     endDate: {
       type: DataTypes.DATE,
       allowNull: false,
       validate: {
+        notNull: { msg: "End date is required"},
         isDate: true,
         isAfterStartDate(value) {
           if (value <= this.startDate) {
-            throw new Error('End date must be after the start date');
+            throw new Error("endDate cannot be on or before startDate");
           }
         }
       }
