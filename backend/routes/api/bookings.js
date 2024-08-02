@@ -8,6 +8,7 @@ const { User } = require('../../db/models')
 const { sequelize } = require('../../db/models')
 const { Booking } = require('../../db/models')
 const { requireAuth } = require('../../utils/auth');
+const formatTimeStamps = require('../../utils/formatTimeStamps')
 
 const router = express.Router()
 
@@ -36,7 +37,7 @@ router.get('/current', requireAuth, async(req, res, next) => {
             ]
     })
 
-    res.status(200).json({ Bookings: bookings })
+    res.status(200).json({ Bookings: formatTimeStamps(bookings) })
     } catch (error) {
         next(error)
     }
@@ -47,6 +48,27 @@ router.put('/:bookingId', requireAuth, async(req, res, next) => {
         const { bookingId } = req.params
         const userId = req.user.id
         const { startDate, endDate } = req.body;
+
+        // Validation
+        const sDateObj = new Date(startDate);
+        const eDateObj = new Date(endDate);
+        const now = new Date();
+
+        // Quick validation check before proceeding
+        const errors = {};
+
+        if (sDateObj < now) {
+            errors.startDate = 'Start date cannot be in the past';
+        }
+        if (eDateObj <= sDateObj) {
+            errors.endDate = 'End date must be after the start date';
+        }
+        if (Object.keys(errors).length) {
+            const error = new Error('Bad Request');
+            error.status = 400;
+            error.errors = errors;
+            throw error;
+        }
 
         const booking = await Booking.findByPk(bookingId);
 
@@ -62,7 +84,7 @@ router.put('/:bookingId', requireAuth, async(req, res, next) => {
             throw error;
         }
 
-        const now = new Date();
+        // const now = new Date();
         const bookingEndDate = new Date(booking.endDate);
 
         if (bookingEndDate < now) {
@@ -169,17 +191,18 @@ router.delete('/:bookingId', requireAuth, async(req, res, next) => {
         const now = new Date();
         const bookingStartDate = new Date(booking.startDate);
 
-        if (bookingStartDate <= now) {
-            const error = new Error("Bookings that hvae been started can't be deleted");
-            error.status = 403;
-            throw error;
-        }
-
         if (booking.userId !== userId && booking.Spot.ownerId !== userId) {
             const error = new Error("Forbidden");
             error.status = 403;
             throw error;
         }
+
+        if (bookingStartDate <= now) {
+            const error = new Error("Bookings that have been started can't be deleted");
+            error.status = 403;
+            throw error;
+        }
+
 
         await booking.destroy();
 

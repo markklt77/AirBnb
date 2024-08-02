@@ -8,6 +8,7 @@ const { User } = require('../../db/models')
 const { sequelize } = require('../../db/models')
 const { requireAuth } = require('../../utils/auth');
 const { route } = require('./users');
+const formatTimeStamps = require('../../utils/formatTimeStamps')
 
 const router = express.Router();
 
@@ -37,7 +38,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
             ]
         })
 
-        res.status(200).json({ "Reviews": reviews})
+        res.status(200).json({ "Reviews": formatTimeStamps(reviews)})
     } catch (err) {
         next(err)
     }
@@ -121,7 +122,7 @@ router.put('/:reviewId', requireAuth, async(req, res, next) => {
 
         await existingReview.save();
 
-        res.status(200).json(existingReview);
+        res.status(200).json(formatTimeStamps(existingReview));
 
     } catch(error) {
         next(error)

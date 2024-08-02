@@ -8,6 +8,7 @@ const { ReviewImage} = require('../../db/models')
 const { requireAuth } = require('../../utils/auth')
 const { sequelize } = require('../../db/models')
 const { Booking } = require('../../db/models')
+const formatTimeStamps = require('../../utils/formatTimeStamps')
 
 const router = express.Router();
 
@@ -40,22 +41,26 @@ router.get('/:spotId/bookings', requireAuth, async(req, res, next) => {
 
         const response = {
             Bookings: bookings.map(booking => {
-                const bookingData = {
+                let bookingData = {
                     spotId: booking.spotId,
                     startDate: new Date(booking.startDate).toLocaleDateString('en-CA'),
                     endDate: new Date(booking.endDate).toLocaleDateString('en-CA'),
                 };
 
                 if (isOwner) {
-                    bookingData.User = {
-                        id: booking.User.id,
-                        firstName: booking.User.firstName,
-                        lastName: booking.User.lastName
+
+                    bookingData = {
+                        ...bookingData,
+                        id: booking.id,
+                        userId: booking.userId,
+                        createdAt: booking.createdAt.toISOString().slice(0, 19).replace('T', ' '), // Formatted
+                        updatedAt: booking.updatedAt.toISOString().slice(0, 19).replace('T', ' '), // Formatted
+                        User: {
+                            id: booking.User.id,
+                            firstName: booking.User.firstName,
+                            lastName: booking.User.lastName
+                        }
                     };
-                    bookingData.id = booking.id,
-                    bookingData = booking.userId,
-                    bookingData.createdAt = booking.createdAt,
-                    bookingData.updatedAt = booking.updatedAt
                 }
 
                 return bookingData;
@@ -102,7 +107,7 @@ router.get('/:spotId/reviews', async (req, res, next) => {
             ]
         })
 
-        res.status(200).json({ Reviews: reviews})
+        res.status(200).json({ Reviews: formatTimeStamps(reviews)})
     } catch(err) {
         next(err)
     }
@@ -282,11 +287,13 @@ router.get('/', async (req, res, next) => {
                 }
             ],
             group: ['Spot.id'],
-            subQuery: false // Ensures correct grouping with limit and offset
+            subQuery: false
         });
 
+
+
         res.status(200).json({
-            Spots: spots,
+            Spots: formatTimeStamps(spots),
             page: pageNum,
             size: sizeNum
         });
@@ -298,10 +305,29 @@ router.get('/', async (req, res, next) => {
 router.post('/:spotId/bookings', requireAuth, async(req, res, next) => {
     try {
         const spotId = req.params.spotId
-        const { userId } = req.user.id
+        const userId = req.user.id
         const { startDate, endDate } = req.body;
-        console.log(startDate)
-        console.log(endDate)
+
+        // Validation
+        const sDateObj = new Date(startDate);
+        const eDateObj = new Date(endDate);
+        const now = new Date();
+
+        // Quick validation check before proceeding
+        const errors = {};
+
+        if (sDateObj < now) {
+            errors.startDate = 'Start date cannot be in the past';
+        }
+        if (eDateObj <= sDateObj) {
+            errors.endDate = 'End date must be after the start date';
+        }
+        if (Object.keys(errors).length) {
+            const error = new Error('Bad Request');
+            error.status = 400;
+            error.errors = errors;
+            throw error;
+        }
 
         //quick validation check before i waste my time
         const bookingInstance = Booking.build({
@@ -388,6 +414,8 @@ router.post('/:spotId/bookings', requireAuth, async(req, res, next) => {
             endDate: endDate
         });
 
+        newBooking = formatTimeStamps(newBooking)
+
         res.status(201).json({
             id: newBooking.id,
             spotId: Number(spotId),
@@ -437,7 +465,7 @@ router.post('/:spotId/reviews', requireAuth, async (req, res, next) => {
             stars
         });
 
-        res.status(201).json(newReview);
+        res.status(201).json(formatTimeStamps(newReview));
 
     } catch (error) {
         next(error)
@@ -484,7 +512,7 @@ router.post('/', requireAuth, async(req, res, next) => {
         const { address, city, state, country, lat, lng, name, description, price } = req.body
         const newSpot = await Spot.create( {ownerId: currentUserId, address, city, state, country, lat, lng, name, description, price } )
 
-        res.status(201).json(newSpot)
+        res.status(201).json(formatTimeStamps(newSpot))
     } catch(err) {
         next(err)
     }
@@ -527,7 +555,7 @@ router.put('/:spotId', requireAuth, async(req, res, next) => {
 
         await spot.save()
 
-        res.status(200).json(spot);
+        res.status(200).json(formatTimeStamps(spot));
     } catch(err) {
         next(err)
     }
