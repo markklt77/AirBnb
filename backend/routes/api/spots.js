@@ -265,7 +265,7 @@ router.get('/', async (req, res, next) => {
             attributes: {
                 include: [
                     [
-                        fn('AVG', col('Reviews.stars')),
+                        fn('AVG', col('"Reviews"."stars"')),
                         "avgRating"
                     ],
                     [
