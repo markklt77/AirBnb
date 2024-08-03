@@ -291,13 +291,9 @@ router.get('/', async (req, res, next) => {
         });
 
         spots = spots.map(spot => {
-            spots = spots.map(spot => {
-            console.log('avgRating before parsing:', spot.dataValues.avgRating);
-            spot.price = parseFloat(spot.price);
-            spot.avgRating = spot.dataValues.avgRating ? parseFloat(spot.dataValues.avgRating) : null;
-            console.log('avgRating after parsing:', spot.avgRating);
+            spot.price = parseFloat(spot.price)
+            spot[avgRating] = spot.dataValues.avgRating ? parseFloat(spot.dataValues.avgRating) : null;
             return spot;
-            });
         })
 
         res.status(200).json({
