@@ -517,6 +517,10 @@ router.post('/', requireAuth, async(req, res, next) => {
         const { address, city, state, country, lat, lng, name, description, price } = req.body
         const newSpot = await Spot.create( {ownerId: currentUserId, address, city, state, country, lat, lng, name, description, price } )
 
+        newSpot.lat = parseFloat(newSpot.lat);
+        newSpot.lng = parseFloat(newSpot.lng);
+        newSpot.price = parseFloat(newSpot.price);
+
         res.status(201).json(formatTimeStamps(newSpot))
     } catch(err) {
         next(err)
