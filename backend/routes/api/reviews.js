@@ -14,7 +14,7 @@ const router = express.Router();
 
 router.get('/current', requireAuth, async (req, res, next) => {
     try {
-        const reviews = await Review.findAll({
+        let reviews = await Review.findAll({
             where: {
                 userId: req.user.id
             },
@@ -45,6 +45,13 @@ router.get('/current', requireAuth, async (req, res, next) => {
                     attributes: ['id', 'url']
                 }
             ]
+        })
+
+        reviews = reviews.map(review => {
+            review.Spot.lat = parseFloat(review.Spot.lat);
+            review.Spot.lng = parseFloat(review.Spot.lng);
+            review.Spot.price = parseFloat(review.Spot.price);
+            return review
         })
 
         res.status(200).json({ "Reviews": formatTimeStamps(reviews)})
