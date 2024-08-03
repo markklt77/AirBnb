@@ -118,12 +118,12 @@ router.get('/current', requireAuth, async (req, res, next) => {
     const { user } = req;
     const currentUserId = user.id
 
-    const spots = await Spot.findAll({
+    let spots = await Spot.findAll({
         attributes: {
             include: [
                 [
                     fn('AVG', col('Reviews.stars')),
-                    'averageStarRating'
+                    'avgRating'
                 ],
                 [
                     sequelize.literal(`(
@@ -152,12 +152,19 @@ router.get('/current', requireAuth, async (req, res, next) => {
         },
         group: ['Spot.id']
     })
-    res.json(spots)
+
+    spots = spots.map(spot => {
+        spot.price = parseFloat(spot.price)
+        spot.dataValues.avgRating = parseFloat(spot.dataValues.avgRating)
+        return spot;
+    })
+
+    res.json(formatTimeStamps(spots))
 })
 
 router.get('/:spotId', async (req, res, next) => {
 
-    const spot = await Spot.findOne({
+    let spot = await Spot.findOne({
         where: {
             id: req.params.spotId
         },
@@ -187,7 +194,12 @@ router.get('/:spotId', async (req, res, next) => {
         group: ['Spot.id', 'SpotImages.id', 'Owner.id']
     })
     if (!spot) res.status(404).json({message: "Spot couldn't be found"})
-    res.json(spot)
+
+    spot.price = parseFloat(spot.price);
+    spot.lat = parseFloat(spot.lat);
+    spot.lng = parseFloat(spot.lng) ;
+    spot.dataValues.averageStarRating = parseFloat(spot.dataValues.averageStarRating);
+    res.json(formatTimeStamps(spot))
 })
 
 
