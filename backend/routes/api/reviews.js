@@ -28,7 +28,16 @@ router.get('/current', requireAuth, async (req, res, next) => {
                     attributes: [
                         'id', 'ownerId', 'address', 'city', 'state', 'country',
                         'lat', 'lng', 'name', 'price',
-                        [sequelize.literal('(SELECT url FROM "SpotImages" WHERE "SpotImages".spotId = Spot.id AND "SpotImages".preview = true LIMIT 1)'), 'previewImage']
+                        [
+                            sequelize.literal(`(
+                              SELECT url
+                              FROM "airbnb_schema"."SpotImages"
+                              WHERE "airbnb_schema"."SpotImages"."spotId" = "Spot".id
+                              AND "airbnb_schema"."SpotImages".preview = true
+                              LIMIT 1
+                            )`),
+                            'previewImage'
+                        ]
                     ]
                 },
                 {
