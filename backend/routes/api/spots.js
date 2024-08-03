@@ -154,8 +154,10 @@ router.get('/current', requireAuth, async (req, res, next) => {
     })
 
     spots = spots.map(spot => {
-        spot.price = parseFloat(spot.price)
-        spot.dataValues.avgRating = parseFloat(spot.dataValues.avgRating)
+        spot.lat = parseFloat(spot.lat);
+        spot.lng = parseFloat(spot.lng);
+        spot.price = parseFloat(spot.price);
+        spot.dataValues.avgRating = parseFloat(spot.dataValues.avgRating);
         return spot;
     })
 
@@ -304,6 +306,8 @@ router.get('/', async (req, res, next) => {
         });
 
         spots = spots.map(spot => {
+            spot.lat = parseFloat(spot.lat);
+            spot.lng = parseFloat(spot.lng);
             spot.price = parseFloat(spot.price)
             spot.dataValues.avgRating = parseFloat(spot.dataValues.avgRating)
             return spot;
