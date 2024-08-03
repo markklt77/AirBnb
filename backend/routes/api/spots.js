@@ -266,7 +266,7 @@ router.get('/', async (req, res, next) => {
                 include: [
                     [
                         fn('AVG', col('Reviews.stars')),
-                        'avgRating'
+                        "avgRating"
                     ],
                     [
                         sequelize.literal(`(
