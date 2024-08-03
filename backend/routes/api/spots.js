@@ -127,9 +127,9 @@ router.get('/current', requireAuth, async (req, res, next) => {
                 [
                     sequelize.literal(`(
                       SELECT url
-                      FROM SpotImages
-                      WHERE SpotImages.spotId = Spot.id
-                      AND SpotImages.preview = true
+                      FROM "SpotImages"
+                      WHERE "SpotImages".spotId = Spot.id
+                      AND "SpotImages".preview = true
                       LIMIT 1
                     )`),
                     'previewImage'
@@ -271,9 +271,9 @@ router.get('/', async (req, res, next) => {
                     [
                         sequelize.literal(`(
                             SELECT url
-                            FROM SpotImages
-                            WHERE SpotImages.spotId = Spot.id
-                            AND SpotImages.preview = true
+                            FROM "SpotImages"
+                            WHERE "SpotImages".spotId = Spot.id
+                            AND "SpotImages".preview = true
                             LIMIT 1
                         )`),
                         'previewImage'

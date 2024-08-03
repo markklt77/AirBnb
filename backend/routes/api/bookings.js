@@ -26,9 +26,9 @@ router.get('/current', requireAuth, async(req, res, next) => {
                     attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'price', [
                         sequelize.literal(`(
                           SELECT url
-                          FROM SpotImages
-                          WHERE SpotImages.spotId = Spot.id
-                          AND SpotImages.preview = true
+                          FROM "SpotImages"
+                          WHERE "SpotImages".spotId = Spot.id
+                          AND "SpotImages".preview = true
                           LIMIT 1
                         )`),
                         'previewImage'
