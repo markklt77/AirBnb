@@ -8,7 +8,8 @@ const { ReviewImage} = require('../../db/models')
 const { requireAuth } = require('../../utils/auth')
 const { sequelize } = require('../../db/models')
 const { Booking } = require('../../db/models')
-const formatTimeStamps = require('../../utils/formatTimeStamps')
+const formatTimeStamps = require('../../utils/formatTimeStamps');
+const { parse } = require('dotenv');
 
 const router = express.Router();
 
@@ -292,7 +293,7 @@ router.get('/', async (req, res, next) => {
 
         spots = spots.map(spot => {
             spot.price = parseFloat(spot.price)
-            spot.dataValues.avgRating = "BUM"
+            spot.dataValues.avgRating = parseFloat(spot.dataValues.avgRating)
             return spot;
         })
 
