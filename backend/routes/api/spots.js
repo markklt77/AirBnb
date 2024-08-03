@@ -128,7 +128,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
                     sequelize.literal(`(
                       SELECT url
                       FROM "airbnb_schema"."SpotImages"
-                      WHERE "airbnb_schema"."SpotImages".spotId = Spot.id
+                      WHERE "airbnb_schema"."SpotImages"."spotId" = Spot.id
                       AND "airbnb_schema"."SpotImages".preview = true
                       LIMIT 1
                     )`),
