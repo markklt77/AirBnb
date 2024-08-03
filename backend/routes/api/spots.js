@@ -258,7 +258,7 @@ router.get('/', async (req, res, next) => {
         const offset = (pageNum - 1) * sizeNum;
         const limit = sizeNum;
 
-        const spots = await Spot.findAll({
+        let spots = await Spot.findAll({
             where,
             offset,
             limit,
@@ -290,7 +290,11 @@ router.get('/', async (req, res, next) => {
             subQuery: false
         });
 
-
+        spots = spots.map(spot => {
+            spot.price = parseFloat(spot.price)
+            spot.avgRating = parseFloat(spot.avgRating)
+            return spot;
+        })
 
         res.status(200).json({
             Spots: formatTimeStamps(spots),
