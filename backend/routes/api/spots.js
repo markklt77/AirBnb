@@ -292,7 +292,7 @@ router.get('/', async (req, res, next) => {
 
         spots = spots.map(spot => {
             spot.price = parseFloat(spot.price)
-            spot[avgRating] = spot.dataValues.avgRating ? parseFloat(spot.dataValues.avgRating) : null;
+            spot.avgRating = "BUM"
             return spot;
         })
 
