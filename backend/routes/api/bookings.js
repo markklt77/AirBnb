@@ -16,7 +16,7 @@ router.get('/current', requireAuth, async(req, res, next) => {
     try {
         const currentUser = req.user.id;
 
-        const bookings = await Booking.findAll({
+        let bookings = await Booking.findAll({
             where: {
                 userId: currentUser
             },
@@ -35,6 +35,13 @@ router.get('/current', requireAuth, async(req, res, next) => {
                     ]]
                 }
             ]
+    })
+
+    bookings = bookings.map(booking => {
+        booking.Spot.lat = parseFloat(booking.Spot.lat);
+        booking.Spot.lng = parseFloat(booking.Spot.lng);
+        booking.Spot.price = parseFloat(booking.Spot.price);
+        return booking
     })
 
     res.status(200).json({ Bookings: formatTimeStamps(bookings) })
