@@ -77,7 +77,7 @@ router.put('/:bookingId', requireAuth, async(req, res, next) => {
             throw error;
         }
 
-        const booking = await Booking.findByPk(bookingId);
+        let booking = await Booking.findByPk(bookingId);
 
         if (!booking) {
             const error = new Error("Booking couldn't be found");
@@ -136,17 +136,26 @@ router.put('/:bookingId', requireAuth, async(req, res, next) => {
                 const bookingStartDate = new Date(booking.startDate);
                 const bookingEndDate = new Date(booking.endDate);
 
-                if (bookingStartDate >= startDateObj && bookingStartDate <= endDateObj) {
+                // if (bookingStartDate >= startDateObj && bookingStartDate <= endDateObj) {
+                //     errors.startDate = 'Start date conflicts with an existing booking';
+
+                // } else if (bookingEndDate >= startDateObj && bookingEndDate <= endDateObj) {
+                //     errors.endDate = 'End date conflicts with an existing booking';
+
+                // } else if (bookingStartDate <= startDateObj && bookingEndDate >= endDateObj) {
+                //     errors.startDate = 'Start date conflicts with an existing booking';
+                //     errors.endDate = 'End date conflicts with an existing booking';
+                // }
+
+                if (bookingStartDate <= startDateObj && bookingEndDate >= endDateObj || (bookingStartDate > startDateObj && bookingEndDate < endDateObj)) {
                     errors.startDate = 'Start date conflicts with an existing booking';
-
-                } else if (bookingEndDate >= startDateObj && bookingEndDate <= endDateObj) {
                     errors.endDate = 'End date conflicts with an existing booking';
-
-                } else if (bookingStartDate <= startDateObj && bookingEndDate >= endDateObj) {
+                } else if (bookingStartDate <= startDateObj) {
                     errors.startDate = 'Start date conflicts with an existing booking';
+                } else if (bookingEndDate >= endDateObj) {
                     errors.endDate = 'End date conflicts with an existing booking';
-
                 }
+
             });
 
             const error = new Error('Sorry, this spot is already booked for the specified dates');
@@ -160,6 +169,8 @@ router.put('/:bookingId', requireAuth, async(req, res, next) => {
             endDate: endDate
         })
         await booking.save();
+
+        booking = formatTimeStamps(booking)
 
         res.status(200).json({
             id: booking.id,
