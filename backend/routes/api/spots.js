@@ -408,17 +408,30 @@ router.post('/:spotId/bookings', requireAuth, async(req, res, next) => {
                 const bookingStartDate = new Date(booking.startDate);
                 const bookingEndDate = new Date(booking.endDate);
 
-                if (bookingStartDate >= startDateObj && bookingStartDate <= endDateObj) {
+                // if (bookingStartDate >= startDateObj && bookingStartDate <= endDateObj) {
+                //     errors.startDate = 'Start date conflicts with an existing booking';
+
+                // } else if (bookingEndDate >= startDateObj && bookingEndDate <= endDateObj) {
+                //     errors.endDate = 'End date conflicts with an existing booking';
+
+                // } else if (bookingStartDate <= startDateObj && bookingEndDate >= endDateObj) {
+                //     errors.startDate = 'Start date conflicts with an existing booking';
+                //     errors.endDate = 'End date conflicts with an existing booking';
+                // }
+
+                if (bookingStartDate <= startDateObj && bookingEndDate >= endDateObj) {
                     errors.startDate = 'Start date conflicts with an existing booking';
-
-                } else if (bookingEndDate >= startDateObj && bookingEndDate <= endDateObj) {
                     errors.endDate = 'End date conflicts with an existing booking';
-
-                } else if (bookingStartDate <= startDateObj && bookingEndDate >= endDateObj) {
-                    errors.startDate = 'Start date conflicts with an existing booking';
-                    errors.endDate = 'End date conflicts with an existing booking';
-
+                } else {
+                    if (bookingStartDate === startDateObj || bookingEndDate === startDateObj || (bookingStartDate < startDateObj && bookingEndDate > startDateObj)) {
+                        errors.startDate = 'Start date conflicts with an existing booking';
+                    }
+                    if (bookingStartDate === endDateObj || (bookingEndDate > endDateObj && bookingStartDate < endDateObj)) {
+                        errors.endDate = 'End date conflicts with an existing booking';
+                    }
                 }
+
+
             });
 
             const error = new Error('Sorry, this spot is already booked for the specified dates');
