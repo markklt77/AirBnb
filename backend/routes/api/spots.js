@@ -341,7 +341,7 @@ router.post('/:spotId/bookings', requireAuth, async(req, res, next) => {
             errors.startDate = 'Start date cannot be in the past';
         }
         if (eDateObj <= sDateObj) {
-            errors.endDate = 'End date must be after the start date';
+            errors.endDate = "endDate cannot be on or before startDate";
         }
         if (Object.keys(errors).length) {
             const error = new Error('Bad Request');
