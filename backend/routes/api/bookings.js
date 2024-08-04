@@ -65,10 +65,10 @@ router.put('/:bookingId', requireAuth, async(req, res, next) => {
         const errors = {};
 
         if (sDateObj < now) {
-            errors.startDate = 'Start date cannot be in the past';
+            errors.startDate = "startDate cannot be in the past";
         }
         if (eDateObj <= sDateObj) {
-            errors.endDate = 'End date must be after the start date';
+            errors.endDate = "endDate cannot be on or before startDate";
         }
         if (Object.keys(errors).length) {
             const error = new Error('Bad Request');
@@ -122,7 +122,10 @@ router.put('/:bookingId', requireAuth, async(req, res, next) => {
                             { endDate: { [Op.gte]: endDate } }
                         ]
                     }
-                ]
+                ],
+                id: {
+                    [Op.ne]: bookingId
+                }
             }
         });
 
@@ -135,17 +138,6 @@ router.put('/:bookingId', requireAuth, async(req, res, next) => {
 
                 const bookingStartDate = new Date(booking.startDate);
                 const bookingEndDate = new Date(booking.endDate);
-
-                // if (bookingStartDate >= startDateObj && bookingStartDate <= endDateObj) {
-                //     errors.startDate = 'Start date conflicts with an existing booking';
-
-                // } else if (bookingEndDate >= startDateObj && bookingEndDate <= endDateObj) {
-                //     errors.endDate = 'End date conflicts with an existing booking';
-
-                // } else if (bookingStartDate <= startDateObj && bookingEndDate >= endDateObj) {
-                //     errors.startDate = 'Start date conflicts with an existing booking';
-                //     errors.endDate = 'End date conflicts with an existing booking';
-                // }
 
                 if (bookingStartDate <= startDateObj && bookingEndDate >= endDateObj || (bookingStartDate > startDateObj && bookingEndDate < endDateObj)) {
                     errors.startDate = 'Start date conflicts with an existing booking';
