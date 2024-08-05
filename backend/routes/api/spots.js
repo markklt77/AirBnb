@@ -174,7 +174,7 @@ router.get('/:spotId', async (req, res, next) => {
             include: [
                 [
                     fn('AVG', col('Reviews.stars')),
-                    'averageStarRating'
+                    'avgStarRating'
                 ]
             ]
         },
@@ -200,7 +200,7 @@ router.get('/:spotId', async (req, res, next) => {
     spot.price = parseFloat(spot.price);
     spot.lat = parseFloat(spot.lat);
     spot.lng = parseFloat(spot.lng) ;
-    spot.dataValues.averageStarRating = parseFloat(spot.dataValues.averageStarRating);
+    spot.dataValues.avgStarRating = parseFloat(spot.dataValues.avgStarRating);
     res.json(formatTimeStamps(spot))
 })
 
