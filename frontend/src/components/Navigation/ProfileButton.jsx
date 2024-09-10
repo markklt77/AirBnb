@@ -7,6 +7,9 @@ import * as sessionActions from '../../store/session';
 import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
+import { useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import './ProfileButton.css'
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -17,6 +20,14 @@ function ProfileButton({ user }) {
     e.stopPropagation(); // Keep from bubbling up to document and triggering closeMenu
     setShowMenu(!showMenu);
   };
+
+  //function to redirect modal to home page after login
+  const navigate = useNavigate();
+  const handleLoginSignupSuccess = () => {
+    navigate('/');  // Navigate to the home page after login
+  };
+
+
 
   useEffect(() => {
     if (!showMenu) return;
@@ -51,8 +62,8 @@ function ProfileButton({ user }) {
         {user ? (
           <>
             <li>{user.username}</li>
-            <li>{user.firstName} {user.lastName}</li>
             <li>{user.email}</li>
+            <li><NavLink to="/spots/current">Manage Spots</NavLink></li>
             <li>
               <button onClick={logout}>Log Out</button>
             </li>
@@ -62,7 +73,7 @@ function ProfileButton({ user }) {
             <OpenModalMenuItem
               itemText="Log In"
               onItemClick={closeMenu}
-              modalComponent={<LoginFormModal />}
+              modalComponent={<LoginFormModal onSuccess={handleLoginSignupSuccess}/>}
             />
             <OpenModalMenuItem
               itemText="Sign Up"

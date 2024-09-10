@@ -1,0 +1,134 @@
+* {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+h1 {
+    font-weight: 550;
+}
+
+
+.image-grid img {
+    max-width: 25vmax;
+}
+
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat (2, 1fr);
+    grid-template-rows: repeat (2, 1fr);
+    gap: 10px;
+    grid-column: 2 / 3;
+}
+
+.spot-image1 {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.spot-image2 {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.spot-image3 {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+.spot-image4 {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+
+.images {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-bottom: 20px;
+    border-bottom: 2px solid lightgrey;
+}
+
+.spot-image5 {
+    grid-column: 1/2;
+    max-width: 47vmax;
+    object-fit: cover;
+}
+
+
+h2 {
+    font-weight: 500
+}
+
+.description {
+    padding: 30px 0px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px solid lightgray
+}
+
+.words {
+    padding-left: 30px;
+}
+
+.further-details {
+    padding: 10px;
+    border: 2px solid grey;
+    background-color: lightgrey;
+    border-radius: 10px;
+    padding-right: 30px;
+}
+
+.top {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.bottom {
+    display: flex;
+    justify-content: center;
+}
+
+.reserve {
+    background-color: lightcoral;
+    padding: 5px 25px 5px 25px;
+}
+
+.star {
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
+.reviews {
+    padding-top: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.individual-review {
+    padding: 20px 0px;
+}
+
+h3 {
+    font-weight: 550;
+}
+
+.date {
+    color: gray
+}
+
+.rev {
+    font-size: 20;
+}
+
+.review-header {
+    display: flex;
+    justify-content: flex-start;
+    border-bottom: 2px solid black;
+}
+
+.review-header p {
+    font-size: 30px;
+}
+
+.review-star {
+    padding-right: 40px;
+}

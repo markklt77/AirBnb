@@ -1,24 +1,14 @@
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import sessionReducer from './session';
+import spotReducer from './spots';
+import reviewReducer from './reviews';
 
 const rootReducer = combineReducers({
-  session: sessionReducer
+  session: sessionReducer,
+  spots: spotReducer,
+  reviews: reviewReducer
 });
-
-
-// Define a simple test reducer
-// const initialState = { message: '' };
-
-// const testReducer = (state = initialState, action) => {
-//   console.log('Reducer received action:', action);
-//   switch (action.type) {
-//     case 'hello':
-//       return { ...state, message: 'Hello, Redux!' };
-//     default:
-//       return state;
-//   }
-// };
 
 
 let enhancer;

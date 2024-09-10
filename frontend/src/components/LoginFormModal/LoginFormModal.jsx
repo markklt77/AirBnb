@@ -6,25 +6,32 @@ import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import './LoginForm.css';
 
-function LoginFormModal() {
+function LoginFormModal({ onSuccess }) {
   const dispatch = useDispatch();
   const [credential, setCredential] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
 
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors({});
     return dispatch(sessionActions.login({ credential, password }))
-      .then(closeModal)
+      .then(() => {
+        closeModal();
+        onSuccess();
+      })
       .catch(async (res) => {
         const data = await res.json();
-        if (data && data.errors) {
-          setErrors(data.errors);
+        if (data) {
+          setErrors(data);
         }
       });
   };
+
+  const isButtonDisabled = credential.length < 4 || password.length < 6;
+
 
   return (
     <>
@@ -48,10 +55,10 @@ function LoginFormModal() {
             required
           />
         </label>
-        {errors.credential && (
-          <p>{errors.credential}</p>
+        {errors.message && (
+          <p className='error'>{errors.message}</p>
         )}
-        <button type="submit">Log In</button>
+        <button type="submit" disabled={isButtonDisabled}>Log In</button>
       </form>
     </>
   );
