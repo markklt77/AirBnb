@@ -1,5 +1,6 @@
 import { csrfFetch } from '../store/csrf';
 
+
 //action types
 const SET_REVIEWS_BY_ID = 'SET_REVIEWS_BY_ID'
 const ADD_REVIEW = 'ADD_REVIEW';
@@ -54,6 +55,7 @@ export const deleteReviewById = (reviewId) => async (dispatch) => {
 
       if (response.ok) {
           dispatch(deleteReview(reviewId));
+
       } else {
           console.error('Failed to delete review');
       }

@@ -1,6 +1,6 @@
 
 import { useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+
 import * as spotActions from '../../store/spots';
 import DeleteSpotModal from '../DeleteModal/DeleteModal';
 import './SpotTile.css';
@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 const SpotTile = ({ id, image, city, state, price, rating, name }) => {
 
   const location = useLocation();
-  const dispatch = useDispatch();
+  console.log(image)
 
   const isUserSpotsPage = location.pathname === '/spots/current';
 
@@ -23,18 +23,22 @@ const SpotTile = ({ id, image, city, state, price, rating, name }) => {
               <img src={testImage} alt={`${city} ${state}`} className="item item1" />
               <p className="item item2">{`${city}, ${state}`}</p>
               <p className="item item3">{`$${price} night`}</p>
-              <p className="item item4">{`⭐ ${rating}`}</p>
+              <p className="item item4">{`⭐ ${rating ? rating.toFixed(1) : "NEW"}`}</p>
           </div>
       </Link>
       {isUserSpotsPage && (
         <div className="spot-actions">
           <Link to={`/spots/${id}/edit`}>
-            <button>Update</button>
+            <button className='update-button'>Update</button>
           </Link>
+
           <OpenModalButton
             modalComponent={<DeleteSpotModal entityId={id} entityType={"Spot"} deleteAction={spotActions.deleteSpot}/>}
             buttonText="Delete"
+            className="delete-button"
           />
+
+
         </div>
       )}
     </div>

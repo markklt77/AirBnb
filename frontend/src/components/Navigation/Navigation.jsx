@@ -3,6 +3,7 @@
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
+import airbnbLogo from "../../assets/airbnbLogo.png"
 import './Navigation.css';
 
 function Navigation({ isLoaded }) {
@@ -11,19 +12,21 @@ function Navigation({ isLoaded }) {
 
   return (
     <div className='navBar'>
-      {sessionUser && (
-        <NavLink to='/spots/new'>Create a New Spot</NavLink>
-      )}
-      <ul className='menu'>
-        <li>
-          <NavLink to="/">Home</NavLink>
-        </li>
-        {isLoaded && (
-          <li>
-            <ProfileButton user={sessionUser} />
-          </li>
+      <NavLink to="/" className="logo">
+          <img src={airbnbLogo} alt="Airbnb Logo" className='airbnb-logo'/>
+      </NavLink>
+      <div className='right-side'>
+        {sessionUser && (
+          <NavLink to='/spots/new' className="nav-link">Create a New Spot</NavLink>
         )}
-      </ul>
+
+          {isLoaded && (
+            <div className="menu" >
+              <ProfileButton user={sessionUser} />
+            </div>
+          )}
+
+      </div>
     </div>
 
   );

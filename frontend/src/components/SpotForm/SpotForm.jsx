@@ -124,99 +124,131 @@ function SpotForm({ initialData = {}, onSubmit, submitButtonText }) {
     };
 
     return (
-        <div>
-            <h1>{submitButtonText}</h1>
-            <h2>Where's your place located?</h2>
-            <p>Guests will only get your exact address once they booked a reservation</p>
+        <div className='creat-spot-form-container'>
+
+            <div className='header-div'>
+                <h1>{submitButtonText}</h1>
+                <h2>Where&apos;s your place located?</h2>
+                <p>Guests will only get your exact address once they booked a reservation</p>
+            </div>
+
             <form onSubmit={handleSubmit}>
+               {errors.country && (
+                    <p className='error'>{errors.country}</p>
+               )}
               <label>
                 Country
-                <input
-                    type="text"
-                    name="country"
-                    placeholder='Country'
-                    value={formData.country}
-                    onChange={handleChange}
-                />
-              </label>
-              {errors.country && (
-                    <p className='error'>{errors.country}</p>
-                )}
-              <label>
-                Street Address
-                <input
-                    type="text"
-                    name="address"
-                    placeholder='Address'
-                    value={formData.address}
-                    onChange={handleChange}
-                />
+                <div className='country-div'>
+                    <input
+                        type="text"
+                        name="country"
+                        placeholder='Country'
+                        value={formData.country}
+                        onChange={handleChange}
+                    />
+                </div>
+
               </label>
               {errors.address && (
                 <p className='error'>{errors.address}</p>
               )}
               <label>
-                City
-                <input
-                    type="text"
-                    name="city"
-                    placeholder='City'
-                    value={formData.city}
-                    onChange={handleChange}
-                />
-              </label>
-              {errors.city && (
-                <p className='error'>{errors.city}</p>
-              )}
-              <label>
-                State
-                <input
-                    type="text"
-                    name="state"
-                    placeholder='STATE'
-                    value={formData.state}
-                    onChange={handleChange}
-                />
-              </label>
-              {errors.state && (
-                <p className='error'>{errors.state}</p>
-              )}
-              <label>
-                Latitude
-                <input
-                    type="text"
-                    name="lat"
-                    placeholder='Latitude'
-                    value={formData.lat}
-                    onChange={handleChange}
-                />
-              </label>
-              {errors.lat && (
-                <p className='error'>{errors.lat}</p>
-              )}
-              <label>
-                Longitude
-                <input
-                    type="text"
-                    name="lng"
-                    placeholder='Longitude'
-                    value={formData.lng}
-                    onChange={handleChange}
-                />
-              </label>
-              {errors.lng && (
-                <p className='error'>{errors.lng}</p>
-              )}
-              <div>
-                <h2>Describe your place to guests</h2>
-                <label>mention the best features of your space, any special amenities like fast wifi or parking, and what you love about the neighborhood.
-                    <textarea
+                Street Address
+                <div className='street-address-div'>
+                    <input
                         type="text"
-                        name="description"
-                        placeholder='Please write at least 30 characters'
-                        value={formData.description}
+                        name="address"
+                        placeholder='Address'
+                        value={formData.address}
                         onChange={handleChange}
                     />
+                </div>
+              </label>
+
+              <div className='city-state-div'>
+
+                <label className='city-div-label'>
+                {errors.city && (
+                    <p className='error'>{errors.city}</p>
+                )}
+                    City
+                    <div className='city-div'>
+                        <input
+                            type="text"
+                            name="city"
+                            placeholder='City'
+                            value={formData.city}
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                </label>
+
+                <label className='state-div-label'>
+                {errors.state && (
+                    <p className='error'>{errors.state}</p>
+                )}
+                    State
+                    <div className='state-div'>
+                        <input
+                            type="text"
+                            name="state"
+                            placeholder='STATE'
+                            value={formData.state}
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                </label>
+
+              </div>
+              <div className='latitude-longitude-div'>
+                <label className='lat-div-label'>
+                    Latitude
+                    <div>
+                        <input
+                            type="text"
+                            name="lat"
+                            placeholder='Latitude'
+                            value={formData.lat}
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                </label>
+                {errors.lat && (
+                    <p className='error'>{errors.lat}</p>
+                )}
+                <label className='lng-div-label'>
+                    Longitude
+                    <div>
+                        <input
+                            type="text"
+                            name="lng"
+                            placeholder='Longitude'
+                            value={formData.lng}
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                </label>
+                {errors.lng && (
+                    <p className='error'>{errors.lng}</p>
+                )}
+              </div>
+              <div>
+                <h2>Describe your place to guests</h2>
+                <label className='description-label'>Mention the best features of your space, any special amenities like fast wifi or parking, and what you love about the neighborhood.
+                    <div className='description-div'>
+                        <textarea
+                            type="text"
+                            name="description"
+                            placeholder='Please write at least 30 characters'
+                            value={formData.description}
+                            onChange={handleChange}
+                        />
+                    </div>
+
                 </label>
                 {errors.description && (
                 <p className='error'>{errors.description}</p>
@@ -224,14 +256,17 @@ function SpotForm({ initialData = {}, onSubmit, submitButtonText }) {
               </div>
               <div>
                 <h2>Create a title for your spot</h2>
-                <label>Catch guest's attention with a spot title that highlights what makes your place special.
-                    <input
-                        type="text"
-                        name="name"
-                        placeholder='Name of your spot'
-                        value={formData.name}
-                        onChange={handleChange}
-                    />
+                <label className='title-label'>Catch guest&apos;s attention with a spot title that highlights what makes your place special.
+                    <div className='title-div'>
+                        <input
+                            type="text"
+                            name="name"
+                            placeholder='Name of your spot'
+                            value={formData.name}
+                            onChange={handleChange}
+                        />
+                    </div>
+
                 </label>
                 {errors.name && (
                 <p className='error'>{errors.name}</p>
@@ -239,14 +274,17 @@ function SpotForm({ initialData = {}, onSubmit, submitButtonText }) {
               </div>
               <div>
                 <h2>Set a base price for your spot</h2>
-                <label>Competitive pricing can help your listing stand out and rank higher in search results.
-                    <input
-                        type="text"
-                        name="price"
-                        placeholder='Price per night (USD)'
-                        value={formData.price}
-                        onChange={handleChange}
-                    />
+                <label className='price-label'>Competitive pricing can help your listing stand out and rank higher in search results.
+                    <div className='price-div'>
+                        <input
+                            type="text"
+                            name="price"
+                            placeholder='Price per night (USD)'
+                            value={formData.price}
+                            onChange={handleChange}
+                        />
+                    </div>
+
                 </label>
                 {errors.price && (
                 <p className='error'>{errors.price}</p>
@@ -255,7 +293,7 @@ function SpotForm({ initialData = {}, onSubmit, submitButtonText }) {
 
               <div>
                 <h2>Liven up your spot with photos</h2>
-                <label>
+                <label className='image-inputs'>
                     Submit a link at least one photo to publish your spot.
                     <input
                         type="text"
@@ -309,7 +347,10 @@ function SpotForm({ initialData = {}, onSubmit, submitButtonText }) {
                     )}
                 </label>
               </div>
-              <button type="submit">{submitButtonText}</button>
+              <div className='button-div'>
+                <button type="submit" className='submit-button'>{submitButtonText}</button>
+              </div>
+
 
 
             </form>

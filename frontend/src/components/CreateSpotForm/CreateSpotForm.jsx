@@ -1,6 +1,7 @@
 import SpotForm from "../SpotForm/SpotForm";
 import { useDispatch } from 'react-redux';
 import * as spotActions from "../../store/spots";
+import './CreateSpotForm.css';
 
 function CreateSpotForm() {
     const dispatch = useDispatch();
@@ -11,11 +12,14 @@ function CreateSpotForm() {
     };
 
     return (
-        <SpotForm
-            initialData={{}}
-            onSubmit={handleCreateSpot}
-            submitButtonText="Create a New Spot"
-        />
+        <div className="creat-spot-form">
+            <SpotForm
+                initialData={{}}
+                onSubmit={handleCreateSpot}
+                submitButtonText="Create a New Spot"
+            />
+        </div>
+
     );
 }
 

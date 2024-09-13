@@ -1,0 +1,53 @@
+.star {
+    font-size: 2rem;
+    cursor: pointer;
+    color: white;
+    transition: color 0.1s ease-in-out;
+
+}
+
+.star.filled {
+    color: gold;
+}
+
+.star-rating {
+    margin: 10px 0;
+}
+
+.review-container {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stars-div {
+    text-align: center;
+}
+
+.review-container label {
+    font-size: 15px;
+}
+
+.text-div {
+    text-align: center;
+}
+
+.text-div textarea {
+    width: 45%;
+    padding-bottom: 35px;
+    margin-bottom: 20px;
+    background-color: rgb(219, 238, 238);
+}
+
+.review-button-div {
+   margin: 20px 0px;
+   text-align: center;
+}
+
+.review-button-div button {
+    background-color: white;
+    padding: 10px 0px;
+    width: 45%;
+    box-shadow: 1px 1px 5px lightgray;
+}

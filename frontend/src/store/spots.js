@@ -75,7 +75,8 @@ export const createSpot = (spotData) => async (dispatch) => {
 }
 
 //Thunk Action Creator to add Images to a Spot
-export const uploadSpotImages = (spotId, imageObjects) => async (dispatch) => {
+//got rid of dispatch as an argument because react wasnt liking it and wouldnt let me npm run build
+export const uploadSpotImages = (spotId, imageObjects) => async () => {
     try {
         for (const { url, preview } of imageObjects) {
             const response = await csrfFetch(`/api/spots/${spotId}/images`, {

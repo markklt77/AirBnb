@@ -1,6 +1,7 @@
 // frontend/src/components/Navigation/OpenModalMenuItem.jsx
 
 import { useModal } from '../../context/Modal';
+import './OpenModalMenuItem.css'
 
 function OpenModalMenuItem({
   modalComponent, // component to render inside the modal

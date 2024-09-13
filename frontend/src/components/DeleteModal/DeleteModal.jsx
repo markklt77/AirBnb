@@ -1,5 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
+import './DeleteModal.css'
 
 function DeleteModal({ entityId, entityType, deleteAction }) {
   const dispatch = useDispatch();
@@ -8,7 +9,12 @@ function DeleteModal({ entityId, entityType, deleteAction }) {
   // Function to handle the deletion based on the entity type
   const handleDelete = async () => {
     try {
-      await dispatch(deleteAction(entityId));
+      if (entityType === "Review") {
+        deleteAction(entityId)
+      } else {
+        await dispatch(deleteAction(entityId));
+      }
+
       closeModal();
     } catch (error) {
       console.error(`Error deleting ${entityType}:`, error);
@@ -17,6 +23,7 @@ function DeleteModal({ entityId, entityType, deleteAction }) {
 
   return (
     <div className="delete-modal">
+      <h1>Confirm Delete</h1>
       {entityType === "Spot" && (
         <h2>Are you sure you want to remove this spot from the listings?</h2>
       )}

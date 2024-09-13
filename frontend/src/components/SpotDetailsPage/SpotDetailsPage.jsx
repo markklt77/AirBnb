@@ -10,10 +10,12 @@ import * as spotActions from "../../store/spots"
 import * as reviewActions from "../../store/reviews"
 import './SpotDetailsPage.css';
 
+
 function SpotDetailsPage () {
 
     async function onReviewFormSubmitModalClose() {
         await dispatch(reviewActions.fetchReviewsById(spotId));
+        // await dispatch(spotActions.fetchSpot(spotId));
     }
 
 
@@ -52,14 +54,21 @@ function SpotDetailsPage () {
     const handleDeleteReview = async (reviewId) => {
         await dispatch(reviewActions.deleteReviewById(reviewId));
         await dispatch(reviewActions.fetchReviewsById(spotId));
+        await dispatch(spotActions.fetchSpot(spotId))
     };
 
     return (
+        <div className='larger-page'>
         <div className='page'>
-            <h1>{spot.name}</h1>
-            <p>{spot.city}, {spot.state}, {spot.country}</p>
+            <div>
+                <h1>{spot.name}</h1>
+                <p>{spot.city}, {spot.state}, {spot.country}</p>
+            </div>
             <div className='images'>
-                <img src={'https://cdn.pixabay.com/photo/2023/12/17/09/47/door-8453898_1280.jpg'} alt={spot.name} className="spot-image5" />
+                <div className='large-image'>
+                    <img src={'https://cdn.pixabay.com/photo/2023/12/17/09/47/door-8453898_1280.jpg'} alt={spot.name} className="spot-image5" />
+                </div>
+
                 <div className='image-grid'>
                     <img src={'https://cdn.pixabay.com/photo/2023/12/17/09/47/door-8453898_1280.jpg'} alt={spot.name} className="spot-image1" />
                     <img src={'https://cdn.pixabay.com/photo/2023/12/17/09/47/door-8453898_1280.jpg'} alt={spot.name} className="spot-image2" />
@@ -69,15 +78,15 @@ function SpotDetailsPage () {
             </div>
             <div className='description'>
                 <div className='words'>
-                    <h2 className='owner'>Hosted by {`${spot.Owner?.firstName || ""} ${spot.Owner?.lastName || ""}`}</h2>
+                    <h2 className='owner'>Hosted by {`${spot.Owner?.firstName || "Anonymous"} ${spot.Owner?.lastName || ""}`}</h2>
                     <p className='des'>{spot.description}</p>
                 </div>
 
                 <div className='further-details'>
                     <div className='top'>
-                        <p>${spot.price} night</p>
-                        <p className='star'>⭐ {spot.avgStarRating}</p>
-                        <p>{reviews.length === 0 ? "NEW" : reviewCountText}</p>
+                        <p className='price'>${spot.price} night</p>
+                        <p className='star'>⭐{spot.avgStarRating ? spot.avgStarRating.toFixed(1) : "0.0"}</p>
+                        <p className='revy'>{reviews.length === 0 ? "NEW" : reviewCountText}</p>
                     </div>
                     <div className='bottom'>
                        <button className='reserve' onClick={reserveButton}>Reserve</button>
@@ -86,27 +95,27 @@ function SpotDetailsPage () {
             </div>
             <div className='reviews'>
                 <div className='review-header'>
-                    <p className='review-star'> ⭐{spot.avgStarRating}</p>
+                    <p className='review-star'> ⭐{spot.avgStarRating ? spot.avgStarRating.toFixed(1) : "0.0"}</p>
                     <p >{reviews.length === 0 ? "NEW" : reviewCountText}</p>
                 </div>
 
                 {!hasUserReview && !isSpotOwner && currentUser && (
-                    <OpenReviewModal
-                        modalComponent={<PostReviewFormModal currentSpot={spotId} onModalClose={onReviewFormSubmitModalClose}/>}
-                        itemText="Post Your Review"
-                    />
+                        <OpenReviewModal
+                            modalComponent={<PostReviewFormModal currentSpot={spotId} onModalClose={onReviewFormSubmitModalClose}/>}
+                            itemText="Post Your Review"
+                        />
                 )}
 
                 <div className='review-content'>
                     {reviews.length > 0 ? (
                         reviews.map(review => (
                             <div key={review.id} className='individual-review'>
-                                <h3>{review.User?.firstName || 'Anonymous'}</h3>
+                                <h3>{review.User?.firstName}</h3>
                                 <div className='date'>{review.createdAt}</div>
                                 <div className='rev'>{review.review}</div>
                                 {review.userId === currentUser?.id && (
                                     <OpenModalButton
-                                        modalComponent={<DeleteModal entityId={review.id} entityType={"Review"} deleteAction={reviewActions.deleteReviewById}/>}
+                                        modalComponent={<DeleteModal entityId={review.id} entityType={"Review"} deleteAction={handleDeleteReview}/>}
                                         buttonText={'Delete'}
                                     />
                                 )}
@@ -117,6 +126,7 @@ function SpotDetailsPage () {
                     )}
                 </div>
             </div>
+        </div>
         </div>
     )
 }

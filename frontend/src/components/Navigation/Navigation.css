@@ -1,9 +1,27 @@
 .navBar {
     display: flex;
-    justify-content: flex-end;
-    border-bottom: 1px solid grey;
+    justify-content: space-between;
+    border-bottom: 2px solid lightgray;
+    width: 100%;
 }
 
 .menu {
     margin-right: 3vmin;
+    margin-left: 3vmin;
+}
+
+
+.right-side {
+    display: flex;
+    align-items: center;
+}
+
+.airbnb-logo {
+    max-width: 150px;
+    height: auto;
+
+  }
+
+.nav-link {
+    text-decoration: none;
 }

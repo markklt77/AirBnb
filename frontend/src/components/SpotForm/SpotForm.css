@@ -1,0 +1,163 @@
+.header-div {
+
+    width: 50rem;
+}
+
+.creat-spot-form-container {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    text-align: left;
+}
+
+form {
+    width: 50rem;
+
+}
+
+.image-inputs{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-bottom: 15px;
+    border-bottom: 2px solid black;
+}
+
+.image-inputs input {
+    margin: 7px 0px;
+    width: 99%;
+}
+
+.city-state-div {
+    display: flex;
+}
+
+.latitude-longitude-div {
+    display: flex;
+}
+
+h2 {
+    margin: 5px 0px;
+}
+
+.country-div input {
+    width: 99%
+}
+
+.street-address-div input{
+    width: 99%;
+}
+
+.city-div input{
+    width: 90%;
+}
+.state-div input {
+    width: 100%;
+}
+
+.city-state-div {
+    display: flex;
+    width: 100%;
+}
+
+.city-div-label {
+    width: 60%;
+}
+
+.state-div-label {
+    width: 39%;
+}
+
+.lat-div-label {
+    width: 50%;
+}
+
+.lng-div-label {
+    width: 50%;
+}
+
+.lat-div-label input {
+    width: 90%;
+
+}
+.lng-div-label input{
+    width: 98%;
+}
+
+.description-div textarea{
+    width: 99%;
+    height: 60px
+}
+
+.description-div {
+    border-bottom: 2px solid black;
+    padding-bottom: 15px;
+}
+
+.price-div input {
+    width: 99%;
+}
+
+.price-div {
+    padding-bottom: 15px;
+    border-bottom: 2px solid black;
+}
+
+.title-div input{
+    width: 99%;
+}
+
+.title-div {
+    border-bottom: 2px solid black;
+    padding-bottom: 15px;
+}
+
+
+input {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+textarea {
+    margin-top: 10px;
+}
+
+
+.submit-button {
+    color: rgb(236, 226, 226);
+    margin-top: 10px;
+    align-self: center;
+    width: 15vmin;
+    background-color: rgb(245, 156, 156);
+
+}
+
+.submit-button:hover {
+    color: white;
+    background-color: rgb(250, 114, 114);
+    box-shadow: 0 0 10px 0 rgb(128, 122, 122);
+}
+
+.latitude-longitude-div {
+    padding-bottom: 10px;
+    border-bottom: 2px solid black;
+    width: 100%;
+}
+
+label {
+    font-size: 17px;
+}
+
+.description-label,
+.price-label,
+.title-label {
+    font-size: 15px;
+}
+
+.button-div {
+    text-align: center;
+}

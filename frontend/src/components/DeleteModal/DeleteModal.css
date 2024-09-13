@@ -1,0 +1,49 @@
+.delete-modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 10px;
+    padding-bottom: 20px;
+}
+
+.modal-actions {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.delete-modal h1 {
+    margin-bottom: 5px;
+
+}
+
+.delete-modal h2 {
+    font-size: 15px;
+    padding: 0px 10px;
+}
+
+.yes-button {
+    background-color: rgb(245, 156, 156);
+    color: rgb(236, 226, 226);
+    margin: 10px 0px;
+    width: 100%;
+}
+
+.yes-button:hover {
+    color: white;
+    background-color: rgb(250, 114, 114);
+    box-shadow: 0 0 10px 0 rgb(128, 122, 122);
+}
+
+.no-button {
+    background-color: rgb(110, 106, 106);
+    color: rgb(236, 226, 226);
+    width: 100%;
+}
+
+.no-button:hover {
+    color: white;
+    background-color: rgb(68, 66, 66);
+    box-shadow: 0 0 10px 0 rgb(128, 122, 122);
+}
