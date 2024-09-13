@@ -280,15 +280,15 @@ router.get('/', async (req, res, next) => {
             attributes: {
                 include: [
                     [
-                        fn('AVG', col('Reviews.stars')),
+                        fn('AVG', col('"Reviews"."stars"')),
                         "avgRating"
                     ],
                     [
                         sequelize.literal(`(
                           SELECT url
-                          FROM "SpotImages"
-                          WHERE "SpotImages"."spotId" = "Spot".id
-                          AND "SpotImages".preview = true
+                          FROM "airbnb_schema"."SpotImages"
+                          WHERE "airbnb_schema"."SpotImages"."spotId" = "Spot".id
+                          AND "airbnb_schema"."SpotImages".preview = true
                           LIMIT 1
                         )`),
                         'previewImage'
