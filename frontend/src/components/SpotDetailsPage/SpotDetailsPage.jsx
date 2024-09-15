@@ -44,7 +44,7 @@ function SpotDetailsPage () {
         dispatch(spotActions.fetchSpot(spotId));
     }, [dispatch, spotId]);
 
-    if (!spot) {
+    if (!spot || !spot.SpotImages) {
         return <div>Loading...</div>;
     }
 
@@ -69,14 +69,24 @@ function SpotDetailsPage () {
             </div>
             <div className='images'>
                 <div className='large-image'>
-                    <img src={spot.SpotImages[0].url} alt={spot.name} className="spot-image5" />
+                    {spot.SpotImages[0] && (
+                        <img src={spot.SpotImages[0].url} alt={spot.name} className="spot-image5" />
+                    )}
                 </div>
 
                 <div className='image-grid'>
-                    <img src={spot.SpotImages[1].url} alt={spot.name} className="spot-image1" />
-                    <img src={spot.SpotImages[2].url} alt={spot.name} className="spot-image2" />
-                    <img src={spot.SpotImages[3].url} alt={spot.name} className="spot-image3" />
-                    <img src={spot.SpotImages[4].url} alt={spot.name} className="spot-image4" />
+                    {spot.SpotImages[1] && (
+                        <img src={spot.SpotImages[1].url} alt={spot.name} className="spot-image1" />
+                    )}
+                    {spot.SpotImages[2] && (
+                        <img src={spot.SpotImages[2].url} alt={spot.name} className="spot-image2" />
+                    )}
+                    {spot.SpotImages[3] && (
+                        <img src={spot.SpotImages[3].url} alt={spot.name} className="spot-image3" />
+                    )}
+                    {spot.SpotImages[4] && (
+                        <img src={spot.SpotImages[4].url} alt={spot.name} className="spot-image4" />
+                    )}
                 </div>
             </div>
             <div className='description'>
