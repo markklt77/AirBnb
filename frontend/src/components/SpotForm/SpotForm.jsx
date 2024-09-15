@@ -123,6 +123,8 @@ function SpotForm({ initialData = {}, onSubmit, submitButtonText }) {
         }
     };
 
+    const submitButtonWording = submitButtonText === 'Create a New Spot'? 'Create Spot' : 'Update your Spot';
+
     return (
         <div className='creat-spot-form-container'>
 
@@ -348,7 +350,7 @@ function SpotForm({ initialData = {}, onSubmit, submitButtonText }) {
                 </label>
               </div>
               <div className='button-div'>
-                <button type="submit" className='submit-button'>{submitButtonText}</button>
+                <button type="submit" className='submit-button'>{submitButtonWording}</button>
               </div>
 
 

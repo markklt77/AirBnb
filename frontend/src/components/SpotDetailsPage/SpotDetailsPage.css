@@ -83,6 +83,9 @@ h2 {
 
 .words {
     padding-left: 30px;
+    padding-right: 30px;
+    max-width: 720px;
+
 }
 
 .further-details {
@@ -113,7 +116,6 @@ h2 {
     font-size: 15px;
     color: black;
     margin-left: 30px;
-    margin-right: 30px;
 }
 
 .revy {
@@ -156,6 +158,18 @@ h3 {
     font-size: 30px;
 }
 
-.review-star {
-    padding-right: 40px;
+
+
+.dot-review-container {
+    /* border: 1px solid red; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+p.dot {
+    position: relative;
+    top: 50%;
+    transform: translateY(-25%);
+    margin: 0px 15px;
 }

@@ -40,6 +40,7 @@ function PostReviewFormModal({ currentSpot }) {
         try {
             await dispatch(reviewActions.postReview(currentSpot, reviewData))
             await dispatch(spotActions.fetchSpot(currentSpot));
+            await dispatch(reviewActions.fetchReviewsById(currentSpot));
 
 
             closeModal();

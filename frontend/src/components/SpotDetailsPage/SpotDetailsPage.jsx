@@ -28,6 +28,7 @@ function SpotDetailsPage () {
 
     const spot = useSelector(state => state.spots.spot);
     const reviews = useSelector(state => state.reviews.reviews)
+    const sortedReviews = reviews.slice().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     const currentUser = useSelector(state => state.session.user);
 
 
@@ -57,6 +58,8 @@ function SpotDetailsPage () {
         await dispatch(spotActions.fetchSpot(spotId))
     };
 
+
+
     return (
         <div className='larger-page'>
         <div className='page'>
@@ -66,14 +69,14 @@ function SpotDetailsPage () {
             </div>
             <div className='images'>
                 <div className='large-image'>
-                    <img src={'https://cdn.pixabay.com/photo/2023/12/17/09/47/door-8453898_1280.jpg'} alt={spot.name} className="spot-image5" />
+                    <img src={spot.SpotImages[0].url} alt={spot.name} className="spot-image5" />
                 </div>
 
                 <div className='image-grid'>
-                    <img src={'https://cdn.pixabay.com/photo/2023/12/17/09/47/door-8453898_1280.jpg'} alt={spot.name} className="spot-image1" />
-                    <img src={'https://cdn.pixabay.com/photo/2023/12/17/09/47/door-8453898_1280.jpg'} alt={spot.name} className="spot-image2" />
-                    <img src={'https://cdn.pixabay.com/photo/2023/12/17/09/47/door-8453898_1280.jpg'} alt={spot.name} className="spot-image3" />
-                    <img src={'https://cdn.pixabay.com/photo/2023/12/17/09/47/door-8453898_1280.jpg'} alt={spot.name} className="spot-image4" />
+                    <img src={spot.SpotImages[1].url} alt={spot.name} className="spot-image1" />
+                    <img src={spot.SpotImages[2].url} alt={spot.name} className="spot-image2" />
+                    <img src={spot.SpotImages[3].url} alt={spot.name} className="spot-image3" />
+                    <img src={spot.SpotImages[4].url} alt={spot.name} className="spot-image4" />
                 </div>
             </div>
             <div className='description'>
@@ -85,8 +88,13 @@ function SpotDetailsPage () {
                 <div className='further-details'>
                     <div className='top'>
                         <p className='price'>${spot.price} night</p>
-                        <p className='star'>⭐{spot.avgStarRating ? spot.avgStarRating.toFixed(1) : "0.0"}</p>
-                        <p className='revy'>{reviews.length === 0 ? "NEW" : reviewCountText}</p>
+                        <p className='star'> ⭐{reviews.length === 0 ? "NEW" : spot.avgStarRating?.toFixed(1)}</p>
+                        {reviews.length > 0 && (
+                            <>
+                                <p className='dot'>.</p>
+                                <p className='revy'>{reviewCountText}</p>
+                            </>
+                        )}
                     </div>
                     <div className='bottom'>
                        <button className='reserve' onClick={reserveButton}>Reserve</button>
@@ -95,8 +103,13 @@ function SpotDetailsPage () {
             </div>
             <div className='reviews'>
                 <div className='review-header'>
-                    <p className='review-star'> ⭐{spot.avgStarRating ? spot.avgStarRating.toFixed(1) : "0.0"}</p>
-                    <p >{reviews.length === 0 ? "NEW" : reviewCountText}</p>
+                    <p className='review-star'> ⭐{reviews.length === 0 ? "NEW" : spot.avgStarRating?.toFixed(1)}</p>
+                    {reviews.length > 0 && (
+                            <div className='dot-review-container'>
+                                <p className='dot'>.</p>
+                                <p className='revy'>{reviewCountText}</p>
+                            </div>
+                        )}
                 </div>
 
                 {!hasUserReview && !isSpotOwner && currentUser && (
@@ -108,10 +121,15 @@ function SpotDetailsPage () {
 
                 <div className='review-content'>
                     {reviews.length > 0 ? (
-                        reviews.map(review => (
+                        sortedReviews.map(review => (
                             <div key={review.id} className='individual-review'>
                                 <h3>{review.User?.firstName}</h3>
-                                <div className='date'>{review.createdAt}</div>
+                                <div className='date'>
+                                    {new Date(review.createdAt).toLocaleDateString('en-US', {
+                                        year: 'numeric',
+                                        month: 'long',
+                                    })}
+                                </div>
                                 <div className='rev'>{review.review}</div>
                                 {review.userId === currentUser?.id && (
                                     <OpenModalButton
@@ -122,7 +140,7 @@ function SpotDetailsPage () {
                             </div>
                         ))
                     ) : (
-                        isSpotOwner ? "" : "Be the first to post a review!"
+                        currentUser && !isSpotOwner ? "Be the first to post a review!": ""
                     )}
                 </div>
             </div>

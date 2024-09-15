@@ -32,10 +32,10 @@ function DeleteModal({ entityId, entityType, deleteAction }) {
       )}
       <div className="modal-actions">
         <button onClick={handleDelete} className="yes-button">
-          Yes
+          Yes (Delete {entityType})
         </button>
         <button onClick={closeModal} className="no-button">
-          No
+          No (Keep {entityType})
         </button>
       </div>
     </div>

@@ -72,7 +72,7 @@ function LoginFormModal({ onSuccess }) {
           />
 
         <button type="submit" disabled={isButtonDisabled} className='log-in-button'>Log In</button>
-        <button className="link-button" onClick={loginDemoUser}>Demo User</button>
+        <button className="link-button" onClick={loginDemoUser}>Login as Demo User</button>
       </form>
 
     </div>

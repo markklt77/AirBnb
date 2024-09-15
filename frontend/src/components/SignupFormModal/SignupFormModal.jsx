@@ -44,6 +44,8 @@ function SignupFormModal() {
     });
   };
 
+  const isButtonDisabled = !email || !username || !firstName || !lastName || !password || !confirmPassword || password.length < 6 || username.length < 4;
+
   return (
     <div className='sign-up-form-container'>
       <h1>Sign Up</h1>
@@ -107,7 +109,7 @@ function SignupFormModal() {
           />
         </label>
 
-        <button type="submit">Sign Up</button>
+        <button type="submit" disabled={isButtonDisabled}>Sign Up</button>
       </form>
     </div>
   );
