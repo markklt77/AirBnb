@@ -1,5 +1,5 @@
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import OpenReviewModal from '../PostReviewFormModal/OpenReviewModal';
@@ -12,6 +12,7 @@ import './SpotDetailsPage.css';
 
 
 function SpotDetailsPage () {
+    const [isLoading, setIsLoading] = useState(true);
 
     async function onReviewFormSubmitModalClose() {
         await dispatch(reviewActions.fetchReviewsById(spotId));
@@ -40,11 +41,16 @@ function SpotDetailsPage () {
 
 
     useEffect(() => {
-        dispatch(reviewActions.fetchReviewsById(spotId))
-        dispatch(spotActions.fetchSpot(spotId));
+        setIsLoading(true);
+        const fetchData = async () => {
+          await dispatch(reviewActions.fetchReviewsById(spotId))
+          await dispatch(spotActions.fetchSpot(spotId));
+          setIsLoading(false);
+        }
+        fetchData();
     }, [dispatch, spotId]);
 
-    if (!spot || !spot.SpotImages) {
+    if (isLoading || !spot.SpotImages) {
         return <div>Loading...</div>;
     }
 

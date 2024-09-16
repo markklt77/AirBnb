@@ -51,3 +51,7 @@
     width: 45%;
     box-shadow: 1px 1px 5px lightgray;
 }
+
+.stars-label {
+    margin-left: 20px;
+}

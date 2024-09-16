@@ -87,7 +87,7 @@ function PostReviewFormModal({ currentSpot }) {
 
                  <div className="stars-div">
                     {renderStars()}
-                    <label>Stars</label>
+                    <label className="stars-label">Stars</label>
                 </div>
                 <div className="review-button-div">
                     <button type="submit" disabled={review.length < 10 || stars === 0}>Submit Your Review</button>
